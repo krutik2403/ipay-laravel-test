@@ -19,6 +19,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'age',
+        'dob',
+        'address',
+        'address',
+        'role',
+        'profile_picture',
         'password',
     ];
 
@@ -40,4 +46,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    const ADMIN = 'admin';
+    const MANAGER = 'manager';
+
+    public static $roles = [
+        self::ADMIN =>"Admin",
+        self::MANAGER => "Manager"
+    ];
+    public static $roles_slug = [
+        self::ADMIN,
+        self::MANAGER
+    ];
+
+    public function role(){
+        return self::$roles[$this->role];
+    }
 }
