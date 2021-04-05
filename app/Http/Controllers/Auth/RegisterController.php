@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Storage;
 use App\Http\Requests\RegistrationRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -78,7 +79,12 @@ class RegisterController extends Controller
     }
 
     public function register(RegistrationRequest $request){
-       
+        if($request->hasfile('profile_picture')){
+        $avatar = $request->file('profile_picture');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+        }
+         Storage::disk('public')->putFileAs('\users', $avatar, $filename);
+        
         $save = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -87,6 +93,7 @@ class RegisterController extends Controller
             'age' => $request->age,
             'address' => $request->address,
             'password' => Hash::make($request->password),
+            'profile_picture' => $filename,
         ]);
         if($save->id){
             return redirect()->route('login')->with('Success');
