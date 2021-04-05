@@ -32,7 +32,7 @@
 
                             <div class="col-md-6">
                                 <select name="role" class="form-control @error('role') is-invalid @enderror">
-                                    <option value="">Selecct Role</option>
+                                    <option value="">Select Role</option>
                                     @forelse($roles as $key =>$role)
                                         <option value="{{$key}}">{{$role}}</option> 
                                     @empty
@@ -63,7 +63,7 @@
                             <label for="dob" class="col-md-4 col-form-label text-md-right">{{ __('Date of Birth') }}</label>
 
                             <div class="col-md-6">
-                                <input id="dob" type="date" class="datepicker form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob">
+                                <input id="dob" type="date"  max="{{date('Y-m-d')}}" class="datepicker form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob">
                                 
                                 @error('dob')
                                     <span class="invalid-feedback" role="alert">
